@@ -122,6 +122,17 @@ curl -X DELETE http://localhost:3000/api/productos/1 \
   -H "Authorization: Bearer <TOKEN>"
 ```
 
+## Despliegue en Render
+
+El proyecto incluye `render.yaml` (blueprint) para desplegarse con la configuración correcta:
+
+1. Sube este repositorio a GitHub (rama `main`).
+2. En [render.com](https://render.com) inicia sesión con GitHub → **New +** → **Blueprint** (o Web Service) → elige el repositorio.
+3. Render detecta `render.yaml` automáticamente: instala dependencias (`npm install`), arranca con `npm start` y genera un `JWT_SECRET` seguro.
+4. Obtendrás una URL tipo `https://api-catalogo-productos.onrender.com`.
+
+**Notas del plan gratuito:** la instancia se duerme tras 15 min sin tráfico (la primera petición tarda ~1 min en despertar) y el sistema de archivos es efímero: los cambios en el catálogo vuelven a los 5 productos semilla al reiniciar o redesplegar.
+
 ## Cumplimiento de la rúbrica
 
 | Criterio | Cómo se cumple |
