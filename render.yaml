@@ -1,0 +1,20 @@
+# Blueprint de Render - despliegue automático
+# Más info: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: api-catalogo-productos
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Genera una clave secreta aleatoria automáticamente
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 8h
+      - key: CORS_ORIGIN
+        value: "*"

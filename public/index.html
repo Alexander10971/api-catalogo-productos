@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Productos · Módulo 3</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div>
+      <p class="kicker">Actividad práctica · Módulo 3</p>
+      <h1>Catálogo de productos</h1>
+      <p class="sub">API REST con CRUD, JWT, CORS y validaciones — panel de administración</p>
+    </div>
+
+    <div class="login-card">
+      <!-- Formulario de login (POST /api/auth/login) -->
+      <form id="formLogin">
+        <strong class="login-titulo">Sesión (JWT)</strong>
+        <input name="usuario" placeholder="Usuario" value="admin" autocomplete="username" required>
+        <input name="password" type="password" placeholder="Contraseña" value="admin123" autocomplete="current-password" required>
+        <button type="submit" class="btn btn-primario">Iniciar sesión</button>
+        <p class="pista">Usuario de prueba: admin / admin123</p>
+      </form>
+      <!-- Vista cuando hay sesión -->
+      <div id="sesionInfo" hidden>
+        <p class="sesion-ok">✔ Sesión activa</p>
+        <p id="nombreUsuario" class="sesion-nombre"></p>
+        <button id="btnLogout" class="btn btn-secundario">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ FORMULARIO CRUD ============ -->
+    <section class="card">
+      <h2 id="tituloFormulario">➕ Nuevo producto</h2>
+      <form id="formProducto" autocomplete="off">
+        <input type="hidden" id="productoId">
+
+        <div class="campos">
+          <label>Nombre *
+            <input id="nombre" maxlength="100" placeholder="Ej: Mouse Inalámbrico" required>
+          </label>
+
+          <label>Precio (USD) *
+            <input id="precio" type="number" step="0.01" min="0.01" placeholder="0.00" required>
+          </label>
+
+          <label>Categoría *
+            <input id="categoria" maxlength="50" list="listaCategorias" placeholder="Ej: Periféricos" required>
+          </label>
+          <datalist id="listaCategorias"></datalist>
+
+          <label class="ancho-completo">Descripción
+            <textarea id="descripcion" rows="2" maxlength="500" placeholder="Opcional (máx. 500 caracteres)"></textarea>
+          </label>
+        </div>
+
+        <div class="acciones">
+          <button type="submit" id="btnGuardar" class="btn btn-primario">Crear producto</button>
+          <button type="button" id="btnCancelar" class="btn btn-secundario" hidden>Cancelar edición</button>
+        </div>
+      </form>
+
+      <div id="alerta" class="alerta" hidden></div>
+    </section>
+
+    <!-- ============ TABLA DEL CATÁLOGO ============ -->
+    <section class="card">
+      <div class="cabecera-tabla">
+        <h2>📋 Catálogo</h2>
+        <span id="contador" class="chip"></span>
+      </div>
+
+      <div class="filtros">
+        <input id="filtroCategoria" placeholder="Filtrar por categoría…">
+        <input id="filtroBuscar" placeholder="Buscar por nombre…">
+        <button id="btnFiltrar" class="btn btn-secundario">Filtrar</button>
+        <button id="btnLimpiar" class="btn btn-secundario">Limpiar</button>
+        <span class="separador"></span>
+        <input id="buscarId" type="number" min="1" placeholder="Buscar por ID…">
+        <button id="btnBuscarId" class="btn btn-secundario" title="GET /api/productos/:id">GET por ID</button>
+      </div>
+
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Nombre</th><th>Precio</th><th>Categoría</th><th>Descripción</th><th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="6" class="vacio">Cargando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ CONSOLA DE PETICIONES ============ -->
+    <section class="card">
+      <h2>🖥️ Consola de peticiones</h2>
+      <p class="pista">Cada operación muestra el método, la ruta y el código HTTP devuelto por la API.</p>
+      <ul id="log" class="log">
+        <li class="neutral">Esperando peticiones…</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    API REST del catálogo de productos · Node.js + Express · JWT · CORS
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
